@@ -7,9 +7,9 @@ public class DuckomanBehavior : MonoBehaviour
 {
 	[SerializeField]
 	float moveSpeed, jumpSpeed;
-	float xInput=0, yInput=0, jumpInput=0, punchInput=0;
+	float xInput=0, yInput=0;
 	int xFacing = 1;
-	public bool isGrounded;
+	public bool isGrounded, isJumping;
 	bool isFalling, canMove, isKnockedBack, isInvuln, isBouncing;
 	int crouching;
 	Vector2 knockback = new Vector2(0,0);
@@ -106,13 +106,14 @@ public class DuckomanBehavior : MonoBehaviour
 		CheckBouncing();
 		CheckHurt();
 		CheckInteract();
+		Move();
 	}
 
 	//FixedUpdate is called at a consistent rate
 	void FixedUpdate () 
 	{
 		//make movement
-		Move();
+
 
 		//animate
 		Flip();
@@ -127,8 +128,7 @@ public class DuckomanBehavior : MonoBehaviour
 	{
 		xInput = Input.GetAxisRaw("Horizontal");
 		yInput = Input.GetAxisRaw("Vertical");
-		jumpInput = Input.GetAxisRaw("Jump");
-		punchInput = Input.GetAxisRaw("Punch");
+		isJumping = (Input.GetKeyDown("l") || Input.GetKeyDown("space"));
 	}
 
 	void CheckGrounded ()
@@ -217,7 +217,7 @@ public class DuckomanBehavior : MonoBehaviour
 	{
 		if (canMove && health > 0)
 		{
-			if (jumpInput>0)
+			if (isJumping)
 			{
 				if (isGrounded)
 				{
@@ -231,7 +231,7 @@ public class DuckomanBehavior : MonoBehaviour
 					Throw();
 				}
 			}
-			else if (jumpInput <= 0)
+			else if (isJumping)
 				jumpTimer = -1;
 
 			body.velocity = new Vector2(xInput*moveSpeed, body.velocity.y);

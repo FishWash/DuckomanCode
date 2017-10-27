@@ -1,4 +1,4 @@
-# DuckomanGame
-This is where the web player lives
+# DuckomanCode
+This is the code used for my side-scrolling game, Duckoman.
 
-link: https://fishwash.github.io/Duckoman/
+Play it here: https://fishwash.github.io/Duckoman/
